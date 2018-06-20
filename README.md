@@ -2,27 +2,11 @@
 
 Application demonstrating Logging, Metrics, and Tracing functionality with Spring Boot 2.0 and PCF Metrics.
 
-## Requirements
+## Demo Steps
 
-1. Your OWN Slack Incoming WebHook URL for the demo'ing Alerting Functionality.
+1. Deploy to PCF
 
-One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration.
-
-You should then be able to send Slack messages to yourself by *posting* to that URL.
-
-Example: (note INSERT_YOUR_WEB_HOOK_URL -- update this with your URL)
-
-```sh
-    curl -X POST --data-urlencode "payload={\"This is a line of text in a channel.\nAnd this is another line of text.\"}"" INSERT_YOUR_WEB_HOOK_URL_HERE
-```
-
-2. Deploy to PCF
-
-To demo the Application Error Level Log Alerting with deployed PCF apps, make sure your PCF app instance has the *SLACK_INCOMING_WEB_HOOK* environment variable set to your URL.
-
-Steps for deployment:
-
-Build the app:
+Build the application:
 
 ```sh
 ./gradlew build
@@ -35,6 +19,65 @@ Note: using random route in-case of pre-existing route.
 ```sh
 cf push metrics-demo --random-route -p build/libs/spring-boot-metrics-demo-0.0.1-SNAPSHOT.jar
 ```
+
+2. Create and Bind the Forwarder Service
+
+  1. Ensure *Metric Forwarder* service is available in the CF MarketPlace
+
+```sh
+cf marketplace
+```
+
+Contact your PCF Cloud Ops team if it is not.
+
+  2. Create the Service
+
+You can use a *plan* and *name* of your choice.
+
+```sh
+cf create-service metrics-forwarder unlimited myforwarder
+```
+
+  3. Bind the Service to your Application
+
+```sh
+cf bind-service metrics-demo myforwarder
+```
+
+  4. Restage your Application
+
+```sh
+cf restage metrics-demo
+
+3. Create a Slack Incoming WebHook URL
+
+Required for Alerting Functionality.
+
+One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration.
+
+You should then be able to send Slack messages to yourself by *posting* to that URL.
+
+Example: (note INSERT_YOUR_WEB_HOOK_URL -- update this with your URL)
+
+```sh
+    curl -X POST --data-urlencode "payload={\"This is a line of text in a channel.\nAnd this is another line of text.\"}"" INSERT_YOUR_WEB_HOOK_URL_HERE
+```
+
+To demo the Application Error Level Log Alerting with deployed PCF apps, make sure your PCF app instance has the *SLACK_INCOMING_WEB_HOOK* environment variable set to your URL.
+
+To add this value using the CLI (update INSERT_YOUR_WEB_HOOK_URL_HERE accordingly)
+
+```sh
+cf set-env SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
+```
+
+4. Demo the functionality
+
+Functionality is available from the default application path / route.
+
+  1. Metrics
+  2. Tracing
+  3. Logging
 
 ## Metrics - Spring Boot
 
@@ -82,34 +125,9 @@ Note MDM is currently not supported.
 
 To forward application metrics, the PCF Metrics Forwarder Service is needed, and needs to be bound to your application.
 
-#### Steps to add the PCF Forwarder to your App using the CF CLI
 
-1. Ensure *Metric Forwarder* service is available in the CF MarketPlace
 
-```sh
-cf marketplace
-```
 
-Contact your PCF Cloud Ops team if it is not.
-
-2. Create the Service
-
-You can use a *plan* and *name* of your choice.
-
-```sh
-cf create-service metrics-forwarder unlimited myforwarder
-```
-
-3. Bind the Service to your Application
-
-```sh
-cf bind-service metrics-demo myforwarder
-```
-
-4. Restage your Application
-
-```sh
-cf restage metrics-demo
 ```
 
 ## Metrics - PCF - Alerts
