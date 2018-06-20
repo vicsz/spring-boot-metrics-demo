@@ -48,6 +48,7 @@ cf bind-service metrics-demo myforwarder
 
 ```sh
 cf restage metrics-demo
+```
 
 3. Create a Slack Incoming WebHook URL
 
@@ -124,11 +125,6 @@ Note MDM is currently not supported.
 ### Requirements
 
 To forward application metrics, the PCF Metrics Forwarder Service is needed, and needs to be bound to your application.
-
-
-
-
-```
 
 ## Metrics - PCF - Alerts
 
