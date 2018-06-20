@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.2.RELEASE'
+		springBootVersion = '2.0.3.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -23,9 +23,20 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 	compile('org.springframework.boot:spring-boot-starter-web')
+
+	compile('com.github.maricn:logback-slack-appender:1.4.0')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE"
+	}
+}
+
+defaultTasks 'build'

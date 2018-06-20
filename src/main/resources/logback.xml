@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <springProperty scope="context" name="APP_NAME" source="vcap.application.name" defaultValue="local_app"/>
+    <springProperty scope="context" name="APP_SPACE" source="vcap.application.space_name" defaultValue="${HOSTNAME}"/>
+
+    <appender name="SLACK" class="com.github.maricn.logback.SlackAppender">
+        <webhookUri>${SLACK_INCOMING_WEB_HOOK}</webhookUri>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%-4relative [%thread] %-5level %class - %msg%n</pattern>
+        </layout>
+        <username>${APP_NAME}@${APP_SPACE}</username>
+        <iconEmoji>:rage:</iconEmoji>
+    </appender>
+
+    <appender name="ASYNC_SLACK" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="SLACK" />
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root>
+        <level value="INFO" />
+
+        <!-- ONLY send ERRORs to SLACK when deployed to cloud environments (PCF) -->
+        <springProfile name="cloud">
+            <appender-ref ref="ASYNC_SLACK" />
+        </springProfile>
+
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
