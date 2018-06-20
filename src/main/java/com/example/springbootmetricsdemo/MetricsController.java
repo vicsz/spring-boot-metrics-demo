@@ -30,6 +30,8 @@ public class MetricsController {
     @RequestMapping("/count")
     public void count(){
 
+        System.out.println("Hitting counter endpoint!");
+
         Metrics.counter("application.sample.counter").increment();
     }
 
