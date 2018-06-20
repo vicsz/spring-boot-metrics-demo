@@ -1,6 +1,32 @@
 <html>
-<header><title>PCF Metrics Demo</title></header>
-<body>
-Hello world!!
+<head>
+    <title>PCF Metrics Demo</title>
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+    </script>
+</head>
+
+
+<body class = "container">
+
+    <div class = "card-panel">
+        <h5>Metrics</h5>
+        <button onclick='console.log("Calling increment counter");' class = "btn waves-effect waves-teal">Increment Counter</button></td>
+    </div>
+
+    <div class = "card-panel">
+        <h5>Tracing</h5>
+        <button onclick='console.log("Calling sample trace");' class = "btn waves-effect waves-teal">Sample Trace Call</button></td>
+    </div>
+
+    <div class = "card-panel">
+        <h5>Logging</h5>
+        <button onclick='console.log("Throwing an exception");' class = "btn waves-effect waves-teal">Throw an Exception</button></td>
+        <button onclick='console.log("Simulating a JVM crash");' class = "btn waves-effect waves-teal">Simulate JVM Crash</button></td>
+    </div>
+
 </body>
 </html>
