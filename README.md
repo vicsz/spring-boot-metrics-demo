@@ -69,8 +69,10 @@ To demo the Application Error Level Log Alerting with deployed PCF apps, make su
 To add this value using the CLI (update INSERT_YOUR_WEB_HOOK_URL_HERE accordingly)
 
 ```sh
-cf set-env SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
+cf set-env metrics-demo SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
 ```
+
+You will need to re-stage after this .. 
 
 4. Demo the functionality
 
