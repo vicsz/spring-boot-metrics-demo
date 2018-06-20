@@ -61,7 +61,7 @@ You should then be able to send Slack messages to yourself by *posting* to that 
 Example: (note INSERT_YOUR_WEB_HOOK_URL -- update this with your URL)
 
 ```sh
-    curl -X POST --data-urlencode "payload={\"This is a line of text in a channel.\nAnd this is another line of text.\"}"" INSERT_YOUR_WEB_HOOK_URL_HERE
+curl -s -d "payload={\"text\":\"Test Message\"}" INSERT_YOUR_WEB_HOOK_URL_HERE
 ```
 
 To demo the Application Error Level Log Alerting with deployed PCF apps, make sure your PCF app instance has the *SLACK_INCOMING_WEB_HOOK* environment variable set to your URL.
