@@ -49,11 +49,7 @@
     <root>
         <level value="INFO" />
 
-        <!-- ONLY send ERRORs to SLACK when deployed to cloud environments (PCF) -->
-        <springProfile name="cloud">
-            <appender-ref ref="ASYNC_SLACK" />
-        </springProfile>
-
+        <appender-ref ref="ASYNC_SLACK" />
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>

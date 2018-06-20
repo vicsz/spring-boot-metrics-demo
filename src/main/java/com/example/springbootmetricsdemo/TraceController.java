@@ -49,7 +49,7 @@ public class TraceController {
 
         randomDelay();
 
-        return "y";
+        return "service c result";
     }
 
     //TODO - Trace with failure !
