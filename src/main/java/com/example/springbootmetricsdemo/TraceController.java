@@ -2,11 +2,11 @@ package com.example.springbootmetricsdemo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -17,11 +17,11 @@ public class TraceController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("http://${vcap.application.application_uris[0]:localhost:8080}")
-    private String application_url;
+    private WebClient webClient;
 
-    @Autowired
-    RestTemplate restTemplate;
+    public TraceController(@Value("http://${vcap.application.application_uris[0]:localhost:8080}") String application_url){
+        webClient = WebClient.create(application_url);
+    }
 
     @RequestMapping("/service-success")
     public String serviceA(){
@@ -30,7 +30,7 @@ public class TraceController {
 
         randomDelay();
 
-        return restTemplate.getForObject(application_url + "/trace/service-b", String.class);
+        return webClient.get().uri("/trace/service-b").retrieve().bodyToMono(String.class).block();
     }
 
     @RequestMapping("/service-b")
@@ -40,7 +40,10 @@ public class TraceController {
 
         randomDelay();
 
-        return restTemplate.getForObject(application_url + "/trace/service-c", String.class);
+        Mono<String> result1 = webClient.get().uri("/trace/service-c").retrieve().bodyToMono(String.class);
+        Mono<String> result2 = webClient.get().uri("/trace/service-c").retrieve().bodyToMono(String.class);
+
+        return result1.block() + result2.block();
     }
 
     @RequestMapping("/service-c")
@@ -56,7 +59,7 @@ public class TraceController {
     private void randomDelay(){
 
         int min_millisecond_delay = 50;
-        int max_millisecond_delay = 150;
+        int max_millisecond_delay = 250;
 
         int millisecond_delay = new Random().nextInt(max_millisecond_delay-min_millisecond_delay) + min_millisecond_delay;
 
