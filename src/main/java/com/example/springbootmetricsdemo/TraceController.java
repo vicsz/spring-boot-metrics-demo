@@ -20,7 +20,7 @@ public class TraceController {
     private WebClient webClient;
 
     public TraceController(@Value("http://${vcap.application.application_uris[0]:localhost:8080}") String application_url){
-        webClient = WebClient.create(application_url);
+        webClient = WebClient.builder().baseUrl(application_url).build();
     }
 
     @RequestMapping("/service-success")
