@@ -24,8 +24,6 @@ public class MetricsController {
 
         double purchaseAmount = getRandomPurchaseAmount();
 
-        logger.info("Making a purchase for $" + purchaseAmount);
-
         Metrics.counter("application.purchases.count").increment();
         Metrics.counter("application.purchases.dollarvalue").increment(purchaseAmount);
     }
