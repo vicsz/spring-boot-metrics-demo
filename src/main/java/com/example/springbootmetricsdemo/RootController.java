@@ -12,7 +12,7 @@ public class RootController {
     @Value("${vcap.application.name:local_app}")
     private String applicationName;
 
-    @Value("${vcap.application.space.name:local_space}")
+    @Value("${vcap.application.space_name:local_space}")
     private String spaceName;
 
     @RequestMapping("/")
