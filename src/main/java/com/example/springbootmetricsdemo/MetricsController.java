@@ -41,7 +41,7 @@ public class MetricsController {
     private double getRandomPurchaseAmount(){
 
         double waveValue = (Math.cos(((double) LocalTime.now().getMinute() )/ 60 * (2 * Math.PI)) + 1 ) / 2;
-        double totalValue = waveValue * 50 + (Math.random() * 12);
+        double totalValue = waveValue * 50 + (Math.random() * 35);
         double roundedValue = Math.round(totalValue*100)/100;
 
         return roundedValue;
