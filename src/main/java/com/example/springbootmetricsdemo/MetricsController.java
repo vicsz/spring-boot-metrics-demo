@@ -17,7 +17,7 @@ public class MetricsController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final int PURCHASE_FREQUENCY_IN_MILLISECONDS = 30000;
+    private static final int PURCHASE_FREQUENCY_IN_MILLISECONDS = 10000;
 
     @Scheduled(fixedRate = PURCHASE_FREQUENCY_IN_MILLISECONDS)
     void performScheduledPurchases() {
@@ -43,7 +43,7 @@ public class MetricsController {
     private double getRandomPurchaseAmount(){
 
         double waveValue = (Math.cos(((double) LocalTime.now().getMinute() )/ 60 * (2 * Math.PI)) + 1 ) / 2;
-        double totalValue = waveValue * 50 + (Math.random() * 20);
+        double totalValue = waveValue * 50 + (Math.random() * 12);
         double roundedValue = Math.round(totalValue*100)/100;
 
         return roundedValue;
