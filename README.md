@@ -78,9 +78,33 @@ You will need to re-stage after this ..
 
 Functionality is available from the default application path / route.
 
-  1. Metrics
-  2. Tracing
-  3. Logging
+#### Metrics
+
+Demo Application Metrics including the built-in ones listed with the /actuator/metrics endpoint. As well as the custom ones used in the MetricsController.
+
+Demo creation of Chart in PCF Metrics using custom application data.
+
+<img src="img/metrics.png" width="250">
+
+#### Trace
+
+Invoke a traced calling.
+
+Locate it in the PCF Metrics Log view, and view it in the Trace Explorer.
+
+<img src="img/trace.png" width="250">
+
+#### Logging - Alert
+
+Demo Slack Logging Alerting, but causing an Application Error / Exception (button).
+
+#### PCF Metrics - Alert
+
+Demo Slack PCF Metrics Alerting, but simulating a JVM crash (button).
+
+Note you will need to configure an alert in the PCF Metrics Monitor Tab.
+
+<img src="img/alert.png" width="250">
 
 ## Metrics - Spring Boot
 

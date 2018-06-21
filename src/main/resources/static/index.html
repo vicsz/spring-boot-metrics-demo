@@ -16,20 +16,29 @@
     <div class="col-xs-1" align="center">
     <div class="container">
         <h1>Metrics</h1>
+        <p>Increment and View Custom Application Metrics.</p>
         <button type="button" class="btn btn-primary" onclick='$.get("metrics/count")' >Increment Sample Counter</button>
         <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.sample.counter'" >View Sample Counter</button>
-        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.purchases.dollarvalue'" >View $$ Purchase  Counter</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.purchases.dollarvalue'" >View Purchase Value Counter</button>
     </div>
 
     <div class="container">
         <h1>Tracing</h1>
+        <p>Invoke a traced call. Visualization will be available in the Trace Explorer.</p>
         <button type="button" class="btn btn-primary" onclick='$.get("trace/service-success")' >Simple Trace Call</button>
     </div>
 
 
     <div class="container">
-        <h1>Logging</h1>
+        <h1>Logging Alert</h1>
+        <p>Assuming correct Slack setup, the runtime exception will cause a Slack Alert.</p>
         <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause Runtime Exception</button>
+        <button type="button" class="btn btn-danger" onclick='$.get("logging/crash")' >Simulate JVM Crash</button>
+    </div>
+
+    <div class="container">
+        <h1>PCF Alert</h1>
+        <p>After adding an Event Monitor in PCF Metrics for cf.system.events.crash, a Slack alert will show shortly after the simluate crash. </p>
         <button type="button" class="btn btn-danger" onclick='$.get("logging/crash")' >Simulate JVM Crash</button>
     </div>
 
