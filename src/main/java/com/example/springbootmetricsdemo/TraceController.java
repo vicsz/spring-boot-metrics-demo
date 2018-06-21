@@ -2,7 +2,9 @@ package com.example.springbootmetricsdemo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,10 +19,15 @@ public class TraceController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Value("http://${vcap.application.application_uris[0]:localhost:8080}")
+    private String application_url;
+
+    @Autowired
     private WebClient webClient;
 
-    public TraceController(@Value("http://${vcap.application.application_uris[0]:localhost:8080}") String application_url){
-        webClient = WebClient.builder().baseUrl(application_url).build();
+    @Bean
+    public WebClient webClient(WebClient.Builder builder) {
+        return builder.build();
     }
 
     @RequestMapping("/service-success")
@@ -30,7 +37,7 @@ public class TraceController {
 
         randomDelay();
 
-        return webClient.get().uri("/trace/service-b").retrieve().bodyToMono(String.class).block();
+        return webClient.get().uri(application_url + "/trace/service-b").retrieve().bodyToMono(String.class).block();
     }
 
     @RequestMapping("/service-b")
@@ -40,8 +47,8 @@ public class TraceController {
 
         randomDelay();
 
-        Mono<String> result1 = webClient.get().uri("/trace/service-c").retrieve().bodyToMono(String.class);
-        Mono<String> result2 = webClient.get().uri("/trace/service-c").retrieve().bodyToMono(String.class);
+        Mono<String> result1 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
+        Mono<String> result2 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
 
         return result1.block() + result2.block();
     }
