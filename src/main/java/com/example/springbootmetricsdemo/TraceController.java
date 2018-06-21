@@ -53,26 +53,6 @@ public class TraceController {
         return "service c result";
     }
 
-    @RequestMapping("/service-failure")
-    public String serviceD(){
-
-        logger.info("Calling Service D");
-
-        randomDelay();
-
-        return restTemplate.getForObject(application_url + "/trace/service-e", String.class);
-    }
-
-    @RequestMapping("/service-e")
-    public String serviceE(){
-
-        logger.info("Calling Service E");
-
-        randomDelay();
-
-        throw new RuntimeException("Service call failed!");
-    }
-
     private void randomDelay(){
 
         int min_millisecond_delay = 50;
