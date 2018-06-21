@@ -4,7 +4,7 @@ Application demonstrating Logging, Metrics, and Tracing functionality with Sprin
 
 ## Demo Steps
 
-1. Deploy to PCF
+### 1. Deploy to PCF
 
 Build the application:
 
@@ -20,9 +20,9 @@ Note: using random route in-case of pre-existing route.
 cf push metrics-demo --random-route -p build/libs/spring-boot-metrics-demo-0.0.1-SNAPSHOT.jar
 ```
 
-2. Create and Bind the Forwarder Service
+### 2. Create and Bind the Forwarder Service
 
-  1. Ensure *Metric Forwarder* service is available in the CF MarketPlace
+#### 1. Ensure *Metric Forwarder* service is available in the CF MarketPlace
 
 ```sh
 cf marketplace
@@ -30,7 +30,7 @@ cf marketplace
 
 Contact your PCF Cloud Ops team if it is not.
 
-  2. Create the Service
+#### 2. Create the Service
 
 You can use a *plan* and *name* of your choice.
 
@@ -38,19 +38,19 @@ You can use a *plan* and *name* of your choice.
 cf create-service metrics-forwarder unlimited myforwarder
 ```
 
-  3. Bind the Service to your Application
+#### 3. Bind the Service to your Application
 
 ```sh
 cf bind-service metrics-demo myforwarder
 ```
 
-  4. Restage your Application
+#### 4. Restage your Application
 
 ```sh
 cf restage metrics-demo
 ```
 
-3. Create a Slack Incoming WebHook URL
+### 3. Create a Slack Incoming WebHook URL
 
 Required for Alerting Functionality.
 
@@ -74,7 +74,7 @@ cf set-env metrics-demo SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
 
 You will need to re-stage after this .. 
 
-4. Demo the functionality
+### 4. Demo the functionality
 
 Functionality is available from the default application path / route.
 
