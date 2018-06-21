@@ -84,7 +84,7 @@ Demo Application Metrics including the built-in ones listed with the /actuator/m
 
 Demo creation of Chart in PCF Metrics using custom application data.
 
-<img src="img/metrics.png" width="250">
+<img src="img/metrics.png" width="750">
 
 #### Trace
 
@@ -92,7 +92,7 @@ Invoke a traced calling.
 
 Locate it in the PCF Metrics Log view, and view it in the Trace Explorer.
 
-<img src="img/trace.png" width="250">
+<img src="img/trace.png" width="750">
 
 #### Logging - Alert
 
@@ -104,7 +104,7 @@ Demo Slack PCF Metrics Alerting, but simulating a JVM crash (button).
 
 Note you will need to configure an alert in the PCF Metrics Monitor Tab.
 
-<img src="img/alert.png" width="250">
+<img src="img/alert.png" width="750">
 
 ## Metrics - Spring Boot
 
