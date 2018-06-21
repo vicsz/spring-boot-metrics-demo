@@ -47,10 +47,11 @@ public class TraceController {
 
         randomDelay();
 
-        Mono<String> result1 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
-        Mono<String> result2 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
+        Mono<String> callMono1 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
+        Mono<String> callMono2 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
 
-        return result1.block() + result2.block();
+        return Mono.zip(callMono1, callMono2, (a,b) -> a + b).block();
+
     }
 
     @RequestMapping("/service-c")
