@@ -22,7 +22,7 @@ cf push metrics-demo --random-route -p build/libs/spring-boot-metrics-demo-0.0.1
 
 ### 2. Create and Bind the Forwarder Service
 
-#### 1. Ensure *Metric Forwarder* service is available in the CF MarketPlace
+#### Ensure *Metric Forwarder* service is available in the CF MarketPlace
 
 ```sh
 cf marketplace
@@ -30,7 +30,7 @@ cf marketplace
 
 Contact your PCF Cloud Ops team if it is not.
 
-#### 2. Create the Service
+#### Create the Service
 
 You can use a *plan* and *name* of your choice.
 
@@ -38,13 +38,13 @@ You can use a *plan* and *name* of your choice.
 cf create-service metrics-forwarder unlimited myforwarder
 ```
 
-#### 3. Bind the Service to your Application
+#### Bind the Service to your Application
 
 ```sh
 cf bind-service metrics-demo myforwarder
 ```
 
-#### 4. Restage your Application
+#### Restage your Application
 
 ```sh
 cf restage metrics-demo
