@@ -164,6 +164,8 @@ In the case of this example, we have configured the *logabck.xml* file to send E
 
 Note the usage of VCAP environment variables in the *logback.xml* file to show PCF environment values in the message alerts (i.e. Application and Space name).
 
+For local testing of Slack Alerting , set the SLACK_INCOMING_WEB_HOOK environment variable.
+
 ### Requirements
 
 The *com.github.maricn:logback-slack-appender:1.4.0* dependency is required in your build script for alerting to Slack in your application.
