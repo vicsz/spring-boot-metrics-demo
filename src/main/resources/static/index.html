@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-store" />
+
     <title>PCF Metrics</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,33 +12,34 @@
 
 </head>
 
-<div class="container">
-    <h1>Metrics</h1>
-    <p>This is some text.</p>
-    <button type="button" class="btn btn-default" onclick='$.get("metrics/count")' >Increment Counter</button>
-</div>
+<body>
+    <div class="col-xs-1" align="center">
+    <div class="container">
+        <h1>Metrics</h1>
+        <button type="button" class="btn btn-primary" onclick='$.get("metrics/count")' >Increment Sample Counter</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.sample.counter'" >View Sample Counter</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.purchases.dollarvalue'" >View $$ Purchase  Counter</button>
+    </div>
 
-<div class="container">
-    <h1>Tracing</h1>
-    <p>This is some text.</p>
-    <button type="button" class="btn btn-default" onclick='$.get("trace/service-a")' >Simple Trace Call</button>
-</div>
+    <div class="container">
+        <h1>Tracing</h1>
+        <button type="button" class="btn btn-primary" onclick='$.get("trace/service-a")' >Simple Trace Call</button>
+    </div>
 
 
-<div class="container">
-    <h1>Logging</h1>
-    <p>This is some text.</p>
-    <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause Runtime Exception</button>
-    <button type="button" class="btn btn-danger" onclick='$.get("logging/crash")' >Simulate JVM Crash</button>
-</div>
+    <div class="container">
+        <h1>Logging</h1>
+        <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause Runtime Exception</button>
+        <button type="button" class="btn btn-danger" onclick='$.get("logging/crash")' >Simulate JVM Crash</button>
+    </div>
 
-<div class="container">
-    <h1>Links</h1>
-    <p>This is some text.</p>
-    <button type="button" class="btn btn-default" onclick="window.location.href='/actuator/metrics'" >Metrics Actuator</button>
-    <button type="button" class="btn btn-default" onclick="window.location.href='/actuator/logfile'" >Logfile Actuator</button>
-</div>
+    <div class="container">
+        <h1>Links</h1>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics'" >Metrics Actuator</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/logfile'" >Logfile Actuator</button>
+    </div>
 
+    </div>
 </body>
 
 </html>

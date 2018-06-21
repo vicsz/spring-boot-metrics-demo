@@ -42,7 +42,12 @@ public class MetricsController {
     //Random Purchase Amount with an hourly pattern
     private double getRandomPurchaseAmount(){
 
-        return Math.round((Math.cos(LocalTime.now().getMinute() / 60) + 1) * 50 + (Math.random() * 10) * 100.0)/100.0;
+        double waveValue = (Math.cos(((double) LocalTime.now().getMinute() )/ 60 * (2 * Math.PI)) + 1 ) / 2;
+        double totalValue = waveValue * 50 + (Math.random() * 20);
+        double roundedValue = Math.round(totalValue*100)/100;
+
+        return roundedValue;
+
     }
 
 

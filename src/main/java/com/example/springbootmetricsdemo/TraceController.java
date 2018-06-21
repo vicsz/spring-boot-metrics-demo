@@ -3,6 +3,7 @@ package com.example.springbootmetricsdemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -16,8 +17,8 @@ public class TraceController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    //For Testing Purposes call own endpoints instead of separate services
-    private static final String SERVICE_URL = "http://localhost:8080";
+    @Value("http://${vcap.application.application_uris[0]:localhost:8080}")
+    private String application_url;
 
     @Autowired
     RestTemplate restTemplate;
@@ -29,7 +30,7 @@ public class TraceController {
 
         randomDelay();
 
-        return restTemplate.getForObject(SERVICE_URL + "/trace/service-b", String.class);
+        return restTemplate.getForObject(application_url + "/trace/service-b", String.class);
     }
 
     @RequestMapping("/service-b")
@@ -39,7 +40,7 @@ public class TraceController {
 
         randomDelay();
 
-        return restTemplate.getForObject(SERVICE_URL + "/trace/service-c", String.class);
+        return restTemplate.getForObject(application_url + "/trace/service-c", String.class);
     }
 
     @RequestMapping("/service-c")
@@ -51,9 +52,6 @@ public class TraceController {
 
         return "service c result";
     }
-
-    //TODO - Trace with failure !
-    //TODO - Trace with parrallel Rest Call
 
     private void randomDelay(){
 
