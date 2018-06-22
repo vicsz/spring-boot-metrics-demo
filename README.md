@@ -94,6 +94,8 @@ Demo creation of Chart in PCF Metrics using custom application data.
 
 #### PCF Metrics - Alerting
 
+*Required PCF Metrics 1.5!!*
+
 Create a PCF Metric Alert under the Monitor Tab -- use the build in crash event.
 
 Demo Slack PCF Metrics Alerting, by simulating a JVM crash (button).
