@@ -47,10 +47,10 @@ public class TraceController {
 
         randomDelay();
 
-        Mono<String> callMono1 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
-        Mono<String> callMono2 = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
+        Mono<String> serviceCallMono = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
 
-        return Mono.zip(callMono1, callMono2, (a,b) -> a + b).block();
+        //2 concurrent calls to Service C
+        return Mono.zip(serviceCallMono, serviceCallMono, (a,b) -> a + b).block();
 
     }
 
