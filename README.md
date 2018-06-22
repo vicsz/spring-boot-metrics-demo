@@ -130,6 +130,8 @@ Demo Slack Logging Alerting, by causing an Application Error / Exception (button
 
 Note SLACK_INCOMING_WEB_HOOK environment variable needs to be set -- either in PCF or locally.
 
+> TIP - Add Logging Error Level Alerts to your Applications for quick notification of Application Issues and reduction in *Mean-Time-to-Repair* (MTTR).
+
 ### Demo Notes
 
 #### Exposed Actuator Endpoints
