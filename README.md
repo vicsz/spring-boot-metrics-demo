@@ -1,6 +1,10 @@
 # Spring Boot with PCF Metrics Demo
 
-Application demonstrating Logging, Metrics, and Tracing functionality with Spring Boot 2.0 and PCF Metrics.
+Application demonstrating Logging, Metrics, Tracing, and Alerting functionality with Spring Boot 2.0 (with Micrometer) and functionality of the "PCF Metrics" Tile in Pivotal Cloud Foundry.
+
+Centralized logging / metrics / and logging functionality is provided out-the-box with the PCF platform with a default storage time of 2 weeks.
+
+Third-party platform ingestion (i.e. Splunk, Datadog, Promethus) can be added as well for more advanced use-cases.
 
 ## Demo Steps
 
@@ -21,6 +25,8 @@ cf push metrics-demo --random-route -p build/libs/spring-boot-metrics-demo-0.0.1
 ```
 
 ### 2. Create and Bind the Forwarder Service
+
+This is required for Custom Application Metrics.
 
 #### Ensure *Metric Forwarder* service is available in the CF MarketPlace
 
@@ -54,7 +60,7 @@ cf restage metrics-demo
 
 Required for Alerting Functionality.
 
-One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration.
+One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration. (App Directory Link is available on home page footer of Slack under Resources).
 
 You should then be able to send Slack messages to yourself by *posting* to that URL.
 
@@ -86,127 +92,73 @@ Demo creation of Chart in PCF Metrics using custom application data.
 
 <img src="img/metrics.png" width="750">
 
+#### PCF Metrics - Alerting
+
+Create a PCF Metric Alert under the Monitor Tab -- use the build in crash event.
+
+Demo Slack PCF Metrics Alerting, by simulating a JVM crash (button).
+
+<img src="img/alert.png" width="750">
+
+PCF Metrics Event alerting lag may talk up to a few minutes.
+
 #### Trace
 
 Invoke a traced calling.
 
 Locate it in the PCF Metrics Log view, and view it in the Trace Explorer.
 
+PCF Metrics Trace ingestion may talk up to a few minutes.
+
+Note that Logs will be aggregated across Applications as well (assuming shared TraceId).
+
 <img src="img/trace.png" width="750">
+
+#### Logging
+
+Demo Logging in PCF Metrics.
+
+Also demo CLI access to centralized logging.
+
+```sh
+cf logs APP_NAME
+```
 
 #### Logging - Alert
 
 Demo Slack Logging Alerting, but causing an Application Error / Exception (button).
 
-#### PCF Metrics - Alert
+### Demo Notes
 
-Demo Slack PCF Metrics Alerting, but simulating a JVM crash (button).
-
-Note you will need to configure an alert in the PCF Metrics Monitor Tab.
-
-<img src="img/alert.png" width="750">
-
-## Metrics - Spring Boot
-
-### Background
-
-As of Spring Boot 2.0, the *Micrometer* application metrics facade is used under-the-hood to provide multidimensional (MDM) vendor-neutral metrics.
-
-Built-in support includes: Prometheus, Netflix Atlas, CloudWatch, Datadog, Graphite, Ganglia, JMX, Influx/Telegraf, New Relic, StatsD, SignalFx, Wavefront, and PCF Metrics.
-
-### Requirements
-
-The *org.springframework.boot:spring-boot-starter-actuator* dependency is required in your build script for Application Metrics in your application.
-
-### The Metrics Actuator Endpoint
-
-Metrics are exposed via the *actuator/metrics* endpoint.
-
-Individual metrics are viewable via HTTP , for example:
-
-actuator/metrics/http.server.requests
-
-A variety of application metrics are included by default.
+#### Exposed Actuator Endpoints
 
 Note that most actuator endpoints are restricted / locked down by default , hence the change in the *application.properties* file to expose all of them (not recommended in production)
 
 ```properties
 management.endpoints.web.exposure.include=*
 ```
+#### Logfile Actuator Endpoint Requirements
 
-With Micrometer multi-dimensionality (MDM) is supported via *tag* , for example we can view metrics for all http server requests with status of 500 using:
+For the logfile endpoint to be enabled, to application needs to be configured to save logs to a local flat file (not a default).
 
-actuator/metrics/http.server.requests?tag=status:500
+#### VCAP environment variable usage in logback.xml
 
-### Custom Application Metrics
+Note the VCAP environment variable usage in logback.xml to include PCF information in Slack Alerts.
 
-Custom metrics can be added by using the *Metrics* object. See XX for code examples.
+#### Custom CONSOLE_LOG_PATTERN in logback.xml
 
-## Metrics - PCF
+For Log messages to correlate to Trace / Span Id's,  these 2 pieces of information need to be included in log entries.
 
-Basic application metrics support is included in PCF Metrics. This includes dashboard support for build-in application metrics as well as custom ones.
+#### Route usage (in TraceController) via VCAP variables
 
-Note MDM is currently not supported.
+For demo purposes, the Demo is calling itself (via app route) , use of localhost:8080 will prevent Tracing Information from showing up as it's captured at the route request level.
 
-### Requirements
+#### WebClient Bean Annotation
 
-To forward application metrics, the PCF Metrics Forwarder Service is needed, and needs to be bound to your application.
+WebClient needs to be annotated with Bean annotation for Spring Cloud Sleuth to correctly "hook in" and inject Trace information.
 
-## Metrics - PCF - Alerts
+#### Tracing Spring Cloud Sleuth Requirements
 
-As of PCF Metrics 1.5, basic alerting is supported on metrics and events (including App crashes).
-
-## Tracing - Spring Boot
-
-### Requirements
-
-The *org.org.springframework.cloud:spring-cloud-sleuth* dependency is required in your build script for trace information in your logfiles.
-
-## Tracing - PCF
-
-PCF Metrics will automatically recognize the trace and span headers generated by Spring Cloud Sleuth, and will use them for visualization information in the Trace Explorer.
-
-To access the Trace Explorer - click on the "View in Trace Explorer" in the Log View in PCF Metrics.
-
-Note: Custom Span are NOT supported.
-
-## Logging - Spring Boot
-
-### Requirements
-
-The *org.springframework.boot:spring-boot-starter-actuator* dependency is required in your build script for Actuator Logfile endpoint to work.
-
-### The Logfile Actuator Endpoint
-
-For the logfile endpoint to be enabled, to application needs to be configured to save logs to a local flat file (not a default). This can be configured either in application.properties or logback.xml.
-
-## Logging - Sprint Boot - Alerts
-
-At the application level, you can configure logback to send alerts on specific log conditions.
-
-In the case of this example, we have configured the *logabck.xml* file to send ERROR level application log message alerts to a Slack Incoming WebHook.
-
-Note the usage of VCAP environment variables in the *logback.xml* file to show PCF environment values in the message alerts (i.e. Application and Space name).
-
-For local testing of Slack Alerting , set the SLACK_INCOMING_WEB_HOOK environment variable.
-
-### Requirements
-
-The *com.github.maricn:logback-slack-appender:1.4.0* dependency is required in your build script for alerting to Slack in your application.
-
-## Logging - PCF
-
-All STDIO logs from applications deployed to PCF are automatically are stored in centralized logging and are viewable in PCF Metrics.
-
-Default storage retention is 2 weeks.
-
-### Local Machine Access to PCF application logs
-
-You can also easily view *tailed* application logs, by running the following from the command line.
-
-```sh
-cf logs APP_NAME
-```
-
+The org.springframework.cloud:spring-cloud-starter-sleuth dependency is required for injection of required Tracing information.
 
 
