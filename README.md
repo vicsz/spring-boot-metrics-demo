@@ -126,7 +126,9 @@ cf logs APP_NAME
 
 #### Logging - Alert
 
-Demo Slack Logging Alerting, but causing an Application Error / Exception (button).
+Demo Slack Logging Alerting, by causing an Application Error / Exception (button).
+
+Note SLACK_INCOMING_WEB_HOOK environment variable needs to be set -- either in PCF or locally.
 
 ### Demo Notes
 
