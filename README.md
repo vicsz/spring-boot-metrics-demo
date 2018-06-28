@@ -1,6 +1,6 @@
 # Spring Boot with PCF Metrics Demo
 
-Application demonstrating Logging, Metrics, Tracing, and Alerting functionality with Spring Boot 2.0 (with Micrometer) and functionality of the "PCF Metrics" Tile in Pivotal Cloud Foundry.
+Application demonstrating Logging, Metrics, Tracing, Monitoring, and Alerting functionality with Spring Boot 2.0 (with Micrometer) and functionality of the "PCF Metrics" Tile in Pivotal Cloud Foundry.
 
 Centralized logging / metrics / and logging functionality is provided out-the-box with the PCF platform with a default storage time of 2 weeks.
 
@@ -133,6 +133,10 @@ Demo Slack Logging Alerting, by causing an Application Error / Exception (button
 Note SLACK_INCOMING_WEB_HOOK environment variable needs to be set -- either in PCF or locally.
 
 > TIP - Add Logging Error Level Alerts to your Applications for quick notification of Application Issues and reduction in *Mean-Time-to-Repair* (MTTR).
+
+#### Application Information
+
+Demo the /actuator/info endpoint.  Note the inclusion of Git and Build information to easily identify deployed artifact.
 
 ### Demo Notes
 

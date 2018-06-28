@@ -10,6 +10,10 @@ buildscript {
 	}
 }
 
+plugins {
+	id "com.gorylenko.gradle-git-properties" version "1.4.21"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -21,6 +25,10 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+}
+
+springBoot {
+	buildInfo()
 }
 
 dependencies {
