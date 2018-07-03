@@ -140,6 +140,8 @@ Demo the /actuator/info endpoint.  Note the inclusion of Git and Build informati
 
 <img src="img/info.png" width="750">
 
+Note that custom /info and /health information can easily be added in a variety of ways.
+
 ### Demo Notes
 
 #### Exposed Actuator Endpoints
