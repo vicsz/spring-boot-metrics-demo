@@ -138,6 +138,8 @@ Note SLACK_INCOMING_WEB_HOOK environment variable needs to be set -- either in P
 
 Demo the /actuator/info endpoint.  Note the inclusion of Git and Build information to easily identify deployed artifact.
 
+<img src="img/info.png" width="750">
+
 ### Demo Notes
 
 #### Exposed Actuator Endpoints
