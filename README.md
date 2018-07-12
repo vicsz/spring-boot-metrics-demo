@@ -146,7 +146,7 @@ Note that we are persisting the UserAgent -- important in helping isolate "page-
 
 Demo the /actuator/info endpoint.  Note the inclusion of Git and Build information to easily identify deployed artifact.
 
-<img src="img/info.png" width="750">
+<img src="img/info.png" width="300">
 
 Note that custom /info and /health information can easily be added in a variety of ways.
 
