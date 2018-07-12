@@ -18,11 +18,11 @@ Build the application:
 
 Deploy to PCF using the CLI:
 
-Note: using random route in-case of pre-existing route.
-
 ```sh
-cf push metrics-demo --random-route -p build/libs/spring-boot-metrics-demo-0.0.1-SNAPSHOT.jar
+cf push
 ```
+
+> Use --no-route in case of conflicting routes.
 
 ### 2. Create and Bind the Forwarder Service
 
@@ -105,6 +105,8 @@ Demo Slack PCF Metrics Alerting, by simulating a JVM crash (button).
 PCF Metrics Event alerting lag may talk up to a few minutes.
 
 #### Trace
+
+Discuss the value of "Correlation IDs" , especially with regards to MicroService designs.
 
 Invoke a traced calling.
 
