@@ -40,10 +40,11 @@
 
 
         <div class="panel panel-default">
-            <div class="panel-heading"><h2>Logging Alert</h2></div>
+            <div class="panel-heading"><h2>Logging</h2></div>
             <div class="panel-body">
-                <p>Assuming correct Slack setup, the runtime exception will cause a Slack Alert.</p>
-                <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause Runtime Exception</button>
+                <p>Assuming correct Slack setup, Errors / Exceptions will cause a Slack Alerts.</p>
+                <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause JVM (Server-Side) Runtime Exception</button>
+                <button type="button" class="btn btn-warning" onclick='throw "JS (Client-Side) Error";' >Cause JS (Client-Side) Error </button>
             </div>
         </div>
 
@@ -71,5 +72,18 @@
 
 
 </body>
+
+<script>
+
+    window.onerror = function(message, url, lineno, colno, error)  {
+
+        $.post({
+            url: 'logging/client-error',
+            contentType: 'text/plain',
+            data: 'Source:' + url + ':' + lineno + ' Error:' + message + ' UserAgent:' + navigator.userAgent
+        });
+    }
+
+</script>
 
 </html>
