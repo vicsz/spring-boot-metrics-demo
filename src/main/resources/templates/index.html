@@ -18,53 +18,50 @@
         <div class="row">
         <div class=".col-md-3 .offset-md-3">
 
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>Metrics</h2></div>
-            <div class="panel-body">
-                <p>Increment and View Custom Application Metrics.</p>
-                <button type="button" class="btn btn-primary" onclick='$.get("metrics/count")' >Increment Sample Counter</button>
-                <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.sample.counter'" >View Sample Counter</button>
-                <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.purchases.dollarvalue'" >View Purchase Value Counter</button>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2>Information</h2></div>
+                <div class="panel-body">
+                    <p th:text="'PCF Info:   ' + ${applicationName} + '@' + ${spaceName}" />
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics'" >Metrics Actuator</button>
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/logfile'" >Logfile Actuator</button>
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/info'" >Info Actuator</button>
+                </div>
             </div>
-        </div>
 
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>Tracing</h2></div>
-            <div class="panel-body">
-                <p>Invoke a traced call. Visualization will be available in the Trace Explorer.</p>
-                <button type="button" class="btn btn-primary" onclick='$.get("trace/service-success")' >Simple Trace Call</button>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2>Logging</h2></div>
+                <div class="panel-body">
+                    <p>Assuming correct Slack setup, Errors / Exceptions will cause a Slack Alerts.</p>
+                    <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause JVM (Server-Side) Runtime Exception</button>
+                    <button type="button" class="btn btn-warning" onclick='throw "JS (Client-Side) Error"' >Cause JS (Client-Side) Error </button>
+                </div>
             </div>
-        </div>
 
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>Logging</h2></div>
-            <div class="panel-body">
-                <p>Assuming correct Slack setup, Errors / Exceptions will cause a Slack Alerts.</p>
-                <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause JVM (Server-Side) Runtime Exception</button>
-                <button type="button" class="btn btn-warning" onclick='throw "JS (Client-Side) Error"' >Cause JS (Client-Side) Error </button>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2>Tracing</h2></div>
+                <div class="panel-body">
+                    <p>Invoke a traced call. Visualization will be available in the Trace Explorer.</p>
+                    <button type="button" class="btn btn-primary" onclick='$.get("trace/service-success")' >Simple Trace Call</button>
+                </div>
             </div>
-        </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>PCF Alert</h2></div>
-            <div class="panel-body">
-                <p>After adding an Event Monitor in PCF Metrics for cf.system.events.crash, a Slack alert will show shortly after the simluate crash. </p>
-                <button type="button" class="btn btn-danger" onclick='$.get("logging/crash")' >Simulate JVM Crash</button>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2>Metrics</h2></div>
+                <div class="panel-body">
+                    <p>Increment and View Custom Application Metrics.</p>
+                    <button type="button" class="btn btn-primary" onclick='$.get("metrics/count")' >Increment Sample Counter</button>
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.sample.counter'" >View Sample Counter</button>
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/application.purchases.dollarvalue'" >View Purchase Value Counter</button>
+                </div>
             </div>
-        </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>Information and Links</h2></div>
-            <div class="panel-body">
-                <p th:text="'PCF Info:   ' + ${applicationName} + '@' + ${spaceName}" />
-                <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics'" >Metrics Actuator</button>
-                <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/logfile'" >Logfile Actuator</button>
-                <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/info'" >Info Actuator</button>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2>PCF Alert</h2></div>
+                <div class="panel-body">
+                    <p>After adding an Event Monitor in PCF Metrics for cf.system.events.crash, a Slack alert will show shortly after the simluate crash. </p>
+                    <button type="button" class="btn btn-danger" onclick='$.get("logging/crash")' >Simulate JVM Crash</button>
+                </div>
             </div>
-        </div>
 
         </div>
         </div>
