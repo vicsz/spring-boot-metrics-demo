@@ -20,7 +20,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = "1.0.${System.env.BUILD_NUMBER ?: '0-SNAPSHOT'}" //Use Jenkins BUILD_NUMBER env if available
 sourceCompatibility = 1.8
 
 repositories {
