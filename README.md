@@ -60,7 +60,11 @@ cf restage metrics-demo
 
 Required for Alerting Functionality.
 
-One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration. (App Directory Link is available on home page footer of Slack under Resources).
+One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration. 
+
+(App Directory Link is available on home page footer of Slack under Resources).
+
+<img src="img/webhook.png" width="750">
 
 You should then be able to send Slack messages to yourself by *posting* to that URL.
 
