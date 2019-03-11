@@ -10,17 +10,29 @@ Third-party platform ingestion (i.e. Splunk, Datadog, Promethus) can be added as
 
 ### 1. Deploy to PCF
 
-Build the application:
+Build the application (via Gradle)
 
 ```sh
 ./gradlew build
 ```
 
-Deploy to PCF using the CLI:
+Build the application (via Maven)
+```sh
+./mvnw package
+```
+
+Deploy to PCF using the CLI (gradle build)
 
 ```sh
 cf push
 ```
+
+Deploy to PCF using the CLI (maven build)
+
+```sh
+cf push -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
+```
+
 
 > Use --no-route in case of conflicting routes.
 
