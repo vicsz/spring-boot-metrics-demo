@@ -80,6 +80,8 @@ One can be created by logging into your Slack account at www.slack.com, browsing
 
 <img src="img/webhook.png" width="750">
 
+<img src="img/webhookurl.png" width="750">
+
 You should then be able to send Slack messages to yourself by *posting* to that URL.
 
 Example: (note INSERT_YOUR_WEB_HOOK_URL -- update this with your URL)
