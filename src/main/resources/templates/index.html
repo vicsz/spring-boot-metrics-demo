@@ -24,6 +24,8 @@
                     <p th:text="'PCF Application Name: ' + ${applicationName}"></p>
                     <p th:text="'PCF Space Name:   ' + ${spaceName}"></p>
                     <p th:text="'PCF Unique Instance Id:   ' + ${instanceId}"></p>
+                    <p th:text="'PCF Instance Index:   ' + ${instanceIndex}"></p>
+                    <p th:text="'JVM Uptime:   ' + ${jvmUpTime}"></p>
                     <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/info'" >Info Actuator</button>
                     <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/health'" >Health Actuator</button>
                 </div>
