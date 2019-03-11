@@ -13,7 +13,7 @@ Third-party platform ingestion (i.e. Splunk, Datadog, Promethus) can be added as
 Build the application (via Gradle)
 
 ```sh
-./gradlew build
+./gradlew
 ```
 
 Build the application (via Maven)
