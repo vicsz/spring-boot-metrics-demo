@@ -15,10 +15,16 @@ public class RootController {
     @Value("${vcap.application.space_name:local_space}")
     private String spaceName;
 
+    @Value("${vcap.application.instance_id:localInstanceId}")
+    private String instanceId;
+
     @RequestMapping("/")
     public String welcome(Map<String, Object> model) {
+
         model.put("applicationName", applicationName);
         model.put("spaceName", spaceName);
+        model.put("instanceId", instanceId);
+
         return "index";
     }
 

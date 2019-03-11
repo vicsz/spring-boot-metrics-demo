@@ -21,7 +21,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h2>Information</h2></div>
                 <div class="panel-body">
-                    <p th:text="'PCF Info:   ' + ${applicationName} + '@' + ${spaceName}"></p>
+                    <p th:text="'PCF Application Name: ' + ${applicationName}"></p>
+                    <p th:text="'PCF Space Name:   ' + ${spaceName}"></p>
+                    <p th:text="'PCF Unique Instance Id:   ' + ${instanceId}"></p>
                     <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/info'" >Info Actuator</button>
                     <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/health'" >Health Actuator</button>
                 </div>
