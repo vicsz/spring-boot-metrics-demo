@@ -84,6 +84,13 @@ cf set-env metrics-demo SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
 
 You will need to re-stage after this .. 
 
+For local testing you will need to set your SLACK_INCOMING_WEB_HOOK environment variable accordingly. 
+
+```sh
+export SLACK_INCOMING_WEB_HOOK=https://hooks.slack.com/services/SOME_CORRECT_VALUE
+
+```
+
 ### 4. Demo the functionality
 
 Functionality is available from the default application path / route.
