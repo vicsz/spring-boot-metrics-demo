@@ -84,7 +84,7 @@ One can be created by logging into your Slack account at www.slack.com, browsing
 
 You should then be able to send Slack messages to yourself by *posting* to that URL.
 
-Example: (note INSERT_YOUR_WEB_HOOK_URL -- update this with your URL)
+Example: (note INSERT_YOUR_WEB_HOOK_URL -- update this with your generated "Webhook URL")
 
 ```sh
 curl -s -d "payload={\"text\":\"Test Message\"}" INSERT_YOUR_WEB_HOOK_URL_HERE
