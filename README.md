@@ -139,6 +139,8 @@ Invoke a traced calling.
 
 Locate it in the PCF Metrics Log view, and view it in the Trace Explorer.
 
+<img src="img/viewtrace.png" width="750">
+
 PCF Metrics Trace ingestion may talk up to a few minutes.
 
 Note that Logs will be aggregated across Applications as well (assuming shared TraceId).

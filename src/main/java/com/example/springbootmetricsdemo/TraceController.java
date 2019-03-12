@@ -30,7 +30,7 @@ public class TraceController {
         return builder.build();
     }
 
-    @RequestMapping("/service-success")
+    @RequestMapping("/service-a")
     public String serviceA(){
 
         logger.info("Calling Service A");

@@ -45,7 +45,8 @@
                 <div class="panel-heading"><h2>Tracing</h2></div>
                 <div class="panel-body">
                     <p>Invoke a traced call. Visualization will be available in the Trace Explorer.</p>
-                    <button type="button" class="btn btn-primary" onclick='$.get("trace/service-success")' >Simple Trace Call</button>
+                    <p><i>(Call Service A , which calls Service B, which makes 2 concurrent calls to Service C. )</i></p>
+                    <button type="button" class="btn btn-primary" onclick='$.get("trace/service-a")' >Simple Trace Call</button>
                 </div>
             </div>
 
