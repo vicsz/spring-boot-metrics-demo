@@ -1,6 +1,5 @@
 package com.example.springbootmetricsdemo;
 
-import io.micrometer.core.instrument.Metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalTime;
+
+import static io.micrometer.core.instrument.Metrics.counter;
 
 @RestController
 @RequestMapping("/metrics")
@@ -24,8 +25,8 @@ public class MetricsController {
 
         double purchaseAmount = getRandomPurchaseAmount();
 
-        Metrics.counter("application.purchases.count").increment();
-        Metrics.counter("application.purchases.dollarvalue").increment(purchaseAmount);
+        counter("application.purchases.count").increment();
+        counter("application.purchases.dollarvalue").increment(purchaseAmount);
     }
 
 
@@ -34,7 +35,7 @@ public class MetricsController {
 
         logger.info("Hit metrics count endpoint");
 
-        Metrics.counter("application.sample.counter").increment();
+        counter("application.sample.counter").increment();
     }
 
     //Random Purchase Amount with an hourly pattern

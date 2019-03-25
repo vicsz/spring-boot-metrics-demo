@@ -41,6 +41,8 @@ dependencies {
 
 	compile('com.github.maricn:logback-slack-appender:1.4.0')
 
+	compile('io.micrometer:micrometer-registry-humio:latest.release')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
