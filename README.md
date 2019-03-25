@@ -214,4 +214,6 @@ WebClient needs to be annotated with Bean annotation for Spring Cloud Sleuth to 
 
 The org.springframework.cloud:spring-cloud-starter-sleuth dependency is required for injection of required Tracing information.
 
+### Metrics Label / Tag Cardinality 
 
+High cardinality label / tag values (i.e. unique guids, user data such as emails, etc) for metrics implementations are highly discouraged, and have the potential to overwhelm time-series databases such as Datadog or Promethues. 
