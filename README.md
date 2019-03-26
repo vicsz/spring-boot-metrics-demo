@@ -214,6 +214,28 @@ WebClient needs to be annotated with Bean annotation for Spring Cloud Sleuth to 
 
 The org.springframework.cloud:spring-cloud-starter-sleuth dependency is required for injection of required Tracing information.
 
-### Metrics Label / Tag Cardinality 
+#### Metrics Label / Tag Cardinality 
 
 High cardinality label / tag values (i.e. unique guids, user data such as emails, etc) for metrics implementations are highly discouraged, and have the potential to overwhelm time-series databases such as Datadog or Promethues. 
+
+### Humio Integration Notes 
+
+Setup a Free Humio Cloud account at : https://humio.com
+
+Add the Humio Micrometer registry to your build dependencies. 
+
+```gradle
+    compile('io.micrometer:micrometer-registry-humio:latest.release')
+```
+
+In your sandbox repo settings, create and get an Ingest Token. 
+
+Update your application properties with the Humio ingest token:
+
+```properties
+    management.metrics.export.humio.api-token=YOUR_TOKEN
+```
+
+Sample Humio Queries: 
+
+__name=sample_distributionsummary | timechart(function=sum(avg))__
