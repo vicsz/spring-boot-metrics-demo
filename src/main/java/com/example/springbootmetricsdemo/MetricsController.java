@@ -62,6 +62,8 @@ public class MetricsController {
 
         Metrics.summary("purchase","product_name", getRandomPurchaseName()).record(getRandomPurchaseAmount());
 
+        //Example event - { "avg": 40, "max": 61, "name": "purchase", "count": 2, "sum": 80, "product_name": "House" }  (after 2 random calls)
+
     }
 
     //Random Purchase Amount with an hourly pattern
