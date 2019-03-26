@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -42,12 +44,23 @@ public class MetricsController {
         //Example event - { "name": "sample_counter", "count": 4 } (after 4 calls)
     }
 
-    @Scheduled(fixedRate = PURCHASE_FREQUENCY_IN_MILLISECONDS)
-    void performScheduledPurchases() {
+    @RequestMapping("/summary")
+    public void distributionSummary() {
+
+        logger.info("Hit metrics distributionSummary endpoint");
 
         Metrics.summary("sample.distributionsummary").record(getRandomPurchaseAmount());
 
         //Example event -- { "avg": 2943, "max": 5018, "name": "sample_distributionsummary", "count": 18, "sum": 52974 }  (after 18 random calls)
+
+    }
+
+    @Scheduled(fixedRate = PURCHASE_FREQUENCY_IN_MILLISECONDS)
+    public void performScheduledPurchases() {
+
+        //Sample Distribution Summary example with a label
+
+        Metrics.summary("purchase","product_name", getRandomPurchaseName()).record(getRandomPurchaseAmount());
 
     }
 
@@ -61,6 +74,14 @@ public class MetricsController {
         return Math.round(totalValue);
 
     }
+
+    private String getRandomPurchaseName() {
+
+        List<String> purchaseNames = Arrays.asList("Car", "Boat", "House", "Goat", "Dog");
+
+        return purchaseNames.get((int)(Math.random() * purchaseNames.size()));
+    }
+
 
     private void randomDelay(){
 

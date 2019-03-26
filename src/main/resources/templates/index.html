@@ -62,8 +62,14 @@
                         <button type="button" class="btn btn-primary" onclick='$.get("metrics/timer")' >Run Timed Method</button>
                         <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.timer'" >View Sample Timer</button>
                     </p>
-                    <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.distributionsummary'" >View Sample Distribution Summary</button>
-                    <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics'" >Metrics Actuator</button>
+                    <p>
+                        <button type="button" class="btn btn-primary" onclick='$.get("metrics/summary")' >Add to Distribution Summary</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.distributionsummary'" >View Sample Distribution Summary</button>
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/purchase'" >View Scheduled Purchase Example</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics'" >Metrics Actuator</button>
+                    </p>
                 </div>
             </div>
 
