@@ -236,6 +236,8 @@ Update your application properties with the Humio ingest token:
     management.metrics.export.humio.api-token=YOUR_TOKEN
 ```
 
+<img src="img/humio.png" width="400">
+
 Sample Humio Queries: 
 
 __name=sample_distributionsummary | timechart(function=sum(avg))__
