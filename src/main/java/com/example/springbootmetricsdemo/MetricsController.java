@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,17 @@ public class MetricsController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static final int PURCHASE_FREQUENCY_IN_MILLISECONDS = 10000;
+
+    @PostConstruct
+    public void gauge(){
+
+        logger.info("Setting up metrics gauge");
+
+        Metrics.gauge("sample.gauge", Runtime.getRuntime(), Runtime::freeMemory);
+
+        //Example event - { "name": "sample_gauge", "value": 313759208 }
+
+    }
 
     @RequestMapping("/count")
     public void count(){
@@ -79,7 +91,7 @@ public class MetricsController {
 
     private String getRandomPurchaseName() {
 
-        List<String> purchaseNames = Arrays.asList("Car", "Boat", "House", "Goat", "Dog");
+        List<String> purchaseNames = Arrays.asList("car", "boat", "house", "goat", "dog");
 
         return purchaseNames.get((int)(Math.random() * purchaseNames.size()));
     }
