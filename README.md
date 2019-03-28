@@ -240,6 +240,9 @@ Update your application properties with the Humio ingest token:
 
 Sample Humio Queries: 
 
-__name=sample_distributionsummary | timechart(function=sum(avg))__
+Timechart example:
 
-__name=purchase | timechart(product_name, function=sum(sum))__
+__name=purchase | timechart(function=avg(sum))__
+
+Timechart example split by product_name (label / tag)
+__name=purchase | timechart(product_name, function=avg(sum))__
