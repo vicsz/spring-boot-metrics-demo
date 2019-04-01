@@ -135,13 +135,13 @@ PCF Metrics Event alerting lag may talk up to a few minutes.
 
 Discuss the value of "Correlation IDs" , especially with regards to MicroService designs.
 
-Invoke a traced calling.
+Invoke a traced calling -- via provided web gui. 
 
 Locate it in the PCF Metrics Log view, and view it in the Trace Explorer.
 
 <img src="img/viewtrace.png" width="750">
 
-PCF Metrics Trace ingestion may talk up to a few minutes.
+PCF Metrics Trace ingestion may take up to a few minutes.
 
 Note that Logs will be aggregated across Applications as well (assuming shared TraceId).
 
@@ -244,5 +244,6 @@ Timechart example:
 
 __name=purchase | timechart(function=avg(sum))__
 
-Timechart example split by product_name (label / tag)
+Timechart example split by product_name (label / tag):
+
 __name=purchase | timechart(product_name, function=avg(sum))__
