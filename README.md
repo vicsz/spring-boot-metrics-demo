@@ -109,7 +109,7 @@ export SLACK_INCOMING_WEB_HOOK=https://hooks.slack.com/services/SOME_CORRECT_VAL
 
 ### 4. Demo the functionality
 
-Functionality is available from the default application path / route.
+Functionality is available from the default application path ( i.e. the application index page ). 
 
 #### Metrics
 
