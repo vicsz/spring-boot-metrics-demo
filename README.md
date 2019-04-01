@@ -16,18 +16,18 @@ Build the application (via Gradle)
 ./gradlew
 ```
 
-Build the application (via Maven)
+or build the application (via Maven)
 ```sh
 ./mvnw package
 ```
 
-Deploy to PCF using the CLI (gradle build)
+Deploy to PCF using the CLI (for gradle build)
 
 ```sh
 cf push
 ```
 
-Deploy to PCF using the CLI (maven build)
+Deploy to PCF using the CLI (for maven build)
 
 ```sh
 cf push -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
