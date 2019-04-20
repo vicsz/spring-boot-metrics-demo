@@ -36,11 +36,57 @@ cf push -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
 
 > Use --no-route in case of conflicting routes.
 
-### 2. Create and Bind the Forwarder Service
+### 2. Enable Metrics forwarding to PCF Metrics 
+
+#### 2.a (PCF 2.4 or greater )
+
+##### Add the Prometheus Micrometer dependency to your build script
+
+Add the io.micrometer:micrometer-registry-prometheus dependency to either your pom.xml or gradle.build file:
+
+Gradle: 
+```groovy
+    compile('io.micrometer:micrometer-registry-prometheus')
+```
+
+Maven:
+```xml
+    <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
+```
+
+##### Ensure Metric Registrar CLI plugin is installed
+
+```sh
+    cf install-plugin -r CF-Community "metric-registrar"
+```
+
+##### Build and Deploy your Application 
+
+```sh
+    gradle build && cf push APP-NAME
+```
+
+Remember to replace APP-NAME with your application name. 
+
+##### Register your Metrics endpoint with PCF
+
+```sh
+    cf register-metrics-endpoint APP-NAME /actuator/prometheus
+``` 
+
+Remember to replace APP-NAME with your application name. 
+
+ 
+#### 2.b (PCF 2.3 or earlier )
+
+Create and Bind the Forwarder Service -- 
 
 This is required for Custom Application Metrics.
 
-#### Ensure *Metric Forwarder* service is available in the CF MarketPlace
+##### Ensure *Metric Forwarder* service is available in the CF MarketPlace
 
 ```sh
 cf marketplace
@@ -48,7 +94,7 @@ cf marketplace
 
 Contact your PCF Cloud Ops team if it is not.
 
-#### Create the Service
+##### Create the Service
 
 You can use a *plan* and *name* of your choice.
 
@@ -56,13 +102,13 @@ You can use a *plan* and *name* of your choice.
 cf create-service metrics-forwarder unlimited myforwarder
 ```
 
-#### Bind the Service to your Application
+##### Bind the Service to your Application
 
 ```sh
 cf bind-service metrics-demo myforwarder
 ```
 
-#### Restage your Application
+##### Restage your Application
 
 ```sh
 cf restage metrics-demo
