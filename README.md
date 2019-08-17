@@ -264,7 +264,9 @@ The org.springframework.cloud:spring-cloud-starter-sleuth dependency is required
 
 High cardinality label / tag values (i.e. unique guids, user data such as emails, etc) for metrics implementations are highly discouraged, and have the potential to overwhelm time-series databases such as Datadog or Promethues. 
 
-### Humio Integration Notes 
+### Humio Metrics Integration Notes 
+
+As an alternate target for Metrics, you can also use alternate Metrics Platform Solutions. One such / easy to setup solution is Humio.
 
 Setup a Free Humio Cloud account at : https://humio.com
 
