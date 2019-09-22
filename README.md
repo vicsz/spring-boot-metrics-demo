@@ -133,7 +133,7 @@ PCF Metrics GUI is PCF AppsMan application view under the "View in PCF Metrics" 
 
 Application functionality is available from the default application path ( i.e. the application index page ).
 
-#### 3.1 - PCF Metrics - Alerting (Beta)
+#### 3.1 - PCF Metrics - Metrics 
 
 Demo Application Metrics including the built-in ones listed with the /actuator/metrics endpoint. As well as the custom ones used in the MetricsController.
 
