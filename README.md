@@ -6,9 +6,17 @@ Centralized logging / metrics / and logging functionality is provided out-the-bo
 
 Third-party platform ingestion (i.e. Splunk, Datadog, Promethus) can be added as well for more advanced use-cases.
 
+## Demo Requirements
+
+### 1 - PCF 2.4 or higher with PCF Metrics Tile installed (available on PWS)
+
+### 2 - CF CLI installed locally
+
+### 3 - Slack installed, with a Incoming Webhook created (instructions provided)
+
 ## Demo Steps
 
-### 1. Deploy to PCF
+### 1 - Build and Deployment
 
 Build the application (via Gradle)
 
@@ -24,99 +32,52 @@ or build the application (via Maven)
 Deploy to PCF using the CLI (for gradle build)
 
 ```sh
-cf push
+cf push APP-NAME
 ```
 
 Deploy to PCF using the CLI (for maven build)
 
 ```sh
-cf push -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
+cf push APP-NAME -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
 ```
 
+> Where APP-NAME is your desired unique application name in PCF
 
-> Use --no-route in case of conflicting routes.
+> If you get a *The app cannot be mapped to route metrics-demo.cfapps.io because the route exists in a different space.* error.  Run the push command with --random-route.
 
-### 2. Enable Metrics forwarding to PCF Metrics 
-
-#### 2.a (PCF 2.4 or greater )
-
-##### Add the Prometheus Micrometer dependency to your build script
-
-Add the io.micrometer:micrometer-registry-prometheus dependency to either your pom.xml or gradle.build file:
-
-Gradle: 
-```groovy
-    compile('io.micrometer:micrometer-registry-prometheus')
+```sh
+cf push --random-route metrics-demo
 ```
 
-Maven:
-```xml
-    <dependency>
-        <groupId>io.micrometer</groupId>
-        <artifactId>micrometer-registry-prometheus</artifactId>
-    </dependency>
-```
+### 2 - Setup
+
+#### 2.1 - Metrics Setup
 
 ##### Ensure Metric Registrar CLI plugin is installed
 
 ```sh
-    cf install-plugin -r CF-Community "metric-registrar"
+cf plugins
 ```
 
-##### Build and Deploy your Application 
+If *metric-registrar* does not exist run the following command:
 
 ```sh
-    gradle build && cf push APP-NAME
+cf install-plugin -r CF-Community "metric-registrar"
 ```
 
-Remember to replace APP-NAME with your application name. 
+> Remember to replace APP-NAME with your application name.
 
 ##### Register your Metrics endpoint with PCF
 
 ```sh
-    cf register-metrics-endpoint APP-NAME /actuator/prometheus
+cf register-metrics-endpoint APP-NAME /actuator/prometheus
 ``` 
 
-Remember to replace APP-NAME with your application name. 
+> Remember to replace APP-NAME with your application name.
 
- 
-#### 2.b (PCF 2.3 or earlier )
+#### 2.2 - Alerting Setup
 
-Create and Bind the Forwarder Service -- 
-
-This is required for Custom Application Metrics.
-
-##### Ensure *Metric Forwarder* service is available in the CF MarketPlace
-
-```sh
-cf marketplace
-```
-
-Contact your PCF Cloud Ops team if it is not.
-
-##### Create the Service
-
-You can use a *plan* and *name* of your choice.
-
-```sh
-cf create-service metrics-forwarder unlimited myforwarder
-```
-
-##### Bind the Service to your Application
-
-```sh
-cf bind-service metrics-demo myforwarder
-```
-
-##### Restage your Application
-
-```sh
-cf restage metrics-demo
-```
-
-### 3. Create a Slack Incoming WebHook URL
-
-Required for Alerting Functionality.
+Create a Slack Incoming WebHook URL
 
 One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration. 
 
@@ -141,10 +102,14 @@ To demo the Application Error Level Log Alerting with deployed PCF apps, make su
 To add this value using the CLI (update INSERT_YOUR_WEB_HOOK_URL_HERE accordingly)
 
 ```sh
-cf set-env metrics-demo SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
+cf set-env APP-NAME SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
 ```
 
-You will need to re-stage after this .. 
+You will need to re-stage for the changes to take effect:
+
+```sh
+cf restage APP-NAME
+```
 
 For local testing you will need to set your SLACK_INCOMING_WEB_HOOK environment variable accordingly. 
 
@@ -153,11 +118,22 @@ export SLACK_INCOMING_WEB_HOOK=https://hooks.slack.com/services/SOME_CORRECT_VAL
 
 ```
 
-### 4. Demo the functionality
+#### 2.3 - Logging Setup
 
-Functionality is available from the default application path ( i.e. the application index page ). 
+No setup required, PCF automatically takes all STDIO / STERR output from applications.
 
-#### Metrics
+#### 2.4 - Tracing Setup
+
+No setup required, PCF automatically detected tracing information provided from Spring Cloud Sleuth dependency.
+
+
+### 3 - Demo
+
+PCF Metrics GUI is PCF AppsMan application view under the "View in PCF Metrics" button.
+
+Application functionality is available from the default application path ( i.e. the application index page ).
+
+#### 3.1 - PCF Metrics - Alerting (Beta)
 
 Demo Application Metrics including the built-in ones listed with the /actuator/metrics endpoint. As well as the custom ones used in the MetricsController.
 
@@ -165,9 +141,7 @@ Demo creation of Chart in PCF Metrics using custom application data.
 
 <img src="img/metrics.png" width="750">
 
-#### PCF Metrics - Alerting
-
-*Required PCF Metrics 1.5!!*
+#### 3.2 - PCF Metrics - Alerting (Beta)
 
 Create a PCF Metric Alert under the Monitor Tab -- use the build in crash event.
 
@@ -177,7 +151,7 @@ Demo Slack PCF Metrics Alerting, by simulating a JVM crash (button).
 
 PCF Metrics Event alerting lag may talk up to a few minutes.
 
-#### Trace
+#### 3.3 - PCF Metrics - Trace Explorer
 
 Discuss the value of "Correlation IDs" , especially with regards to MicroService designs.
 
@@ -193,9 +167,9 @@ Note that Logs will be aggregated across Applications as well (assuming shared T
 
 <img src="img/trace.png" width="750">
 
-#### Logging
+#### 3.4 - PCF Metrics Logging
 
-Demo Logging in PCF Metrics.
+Demo Logging and Search in PCF Metrics.
 
 Also demo CLI access to centralized logging.
 
@@ -203,7 +177,7 @@ Also demo CLI access to centralized logging.
 cf logs APP_NAME
 ```
 
-#### Logging - Alert
+#### 3.5 - Application Error Level Log Alerting
 
 Note SLACK_INCOMING_WEB_HOOK environment variable needs to be set -- either in PCF or locally.
 
@@ -219,7 +193,7 @@ Demo Client-Side Alerting (JS), by causing a Client-Side Error / Exception (butt
 
 Note that we are persisting the UserAgent -- important in helping isolate "page-snap" issues.
 
-#### Application Information
+##### Application Information
 
 Demo the /actuator/info endpoint.  Note the inclusion of Git and Build information to easily identify deployed artifact.
 
@@ -227,7 +201,7 @@ Demo the /actuator/info endpoint.  Note the inclusion of Git and Build informati
 
 Note that custom /info and /health information can easily be added in a variety of ways.
 
-### Demo Notes
+### 4 - Additional Demo Notes
 
 #### Exposed Actuator Endpoints
 
@@ -264,7 +238,7 @@ The org.springframework.cloud:spring-cloud-starter-sleuth dependency is required
 
 High cardinality label / tag values (i.e. unique guids, user data such as emails, etc) for metrics implementations are highly discouraged, and have the potential to overwhelm time-series databases such as Datadog or Promethues. 
 
-### Humio Metrics Integration Notes 
+### 5 - 3rd-Party Metrics -- Humio Integration Instructions (Optional)
 
 As an alternate target for Metrics, you can also use alternate Metrics Platform Solutions. One such / easy to setup solution is Humio.
 
