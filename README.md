@@ -98,7 +98,7 @@ Application functionality is available from the default application path ( i.e. 
 
 Demo Logging and Search in PCF Metrics, including filtering Application logs, searching and selecting time intervals.
 
-Create applications logs -- via provided web GUI (Cause JVM or JS Error). 
+Create applications logs -- via provided web GUI (Cause JVM or JS Error).
 
 Also demo CLI access to centralized logging.
 
