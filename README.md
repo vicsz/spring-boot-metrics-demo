@@ -134,8 +134,6 @@ You can demo :
 
 Available Micrometer metrics are also available to view at the /actuator/metrics endpoint of your application.
 
-<img src="img/metricsbutton.png" width="750">
-
 <img src="img/metrics.png" width="750">
 
 > Discussion Item - Note Counter Metrics Types are currently NOT supported in PCF Metrics.
