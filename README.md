@@ -37,16 +37,10 @@ or build the application (via Maven)
 ./mvnw package
 ```
 
-Deploy to PCF using the CLI (for gradle build)
+Deploy to PCF using the CLI
 
 ```sh
 cf push
-```
-
-Deploy to PCF using the CLI (for maven build)
-
-```sh
-cf push -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
 ```
 
 ### 2 - Setup
