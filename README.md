@@ -19,7 +19,7 @@ Third-party platform ingestion (i.e. Splunk, Datadog, Promethus) can be added as
 Clone to Source Code Repo
 
 ```sh
-git clone https://github.com/vicsz/spring-boot-metrics-demo.git
+git clone http://github.com/vicsz/spring-boot-metrics-demo.git
 ```
 
 ```sh
