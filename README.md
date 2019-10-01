@@ -99,7 +99,7 @@ Create applications logs -- via provided web GUI (Cause JVM or JS Error).
 Also demo CLI access to centralized logging.
 
 ```sh
-cf logs metrics-demo
+cf logs metrics-demo --recent
 ```
 
 
