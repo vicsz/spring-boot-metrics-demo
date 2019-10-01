@@ -16,6 +16,16 @@ Third-party platform ingestion (i.e. Splunk, Datadog, Promethus) can be added as
 
 ### 1 - Build and Deployment
 
+Clone to Source Code Repo
+
+```sh
+git clone https://github.com/vicsz/spring-boot-metrics-demo.git
+```
+
+```sh
+cd spring-boot-metrics-demo
+```
+
 Build the application (via Gradle)
 
 ```sh
