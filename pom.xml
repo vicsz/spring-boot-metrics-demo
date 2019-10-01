@@ -94,6 +94,8 @@
 			</plugin>
 
 		</plugins>
+	  <directory>${project.basedir}/build/libs</directory>
+	  <outputDirectory>${project.build.directory}/build/classes</outputDirectory>
 	</build>
 
 
