@@ -1,6 +1,6 @@
 # Spring Boot with PCF Metrics Demo
 
-Application demonstrating Logging, Metrics, Tracing, Monitoring, and Alerting functionality with Spring Boot 2.0 (with Micrometer) and functionality of the "PCF Metrics" Tile in Pivotal Cloud Foundry.
+Application demonstrating Logging, Tracing, and Metrics functionality with Spring Boot 2.X (with Micrometer) and functionality of the "PCF Metrics" Tile in Pivotal Cloud Foundry.
 
 Centralized logging / metrics / and logging functionality is provided out-the-box with the PCF platform with a default storage time of 2 weeks.
 
@@ -11,8 +11,6 @@ Third-party platform ingestion (i.e. Splunk, Datadog, Promethus) can be added as
 ### 1 - PCF 2.4 or higher with PCF Metrics Tile installed (available on PWS)
 
 ### 2 - CF CLI installed locally
-
-### 3 - Slack installed, with a Incoming Webhook created (instructions provided)
 
 ## Demo Steps
 
@@ -51,7 +49,17 @@ cf push --random-route metrics-demo
 
 ### 2 - Setup
 
-#### 2.1 - Metrics Setup
+#### 2.1 - Logging Setup
+
+No setup required, PCF automatically takes all STDIO / STERR output from deployed applications.
+
+#### 2.2 - Tracing Setup
+
+No setup required, PCF automatically detected tracing information provided from Spring Cloud Sleuth dependency.
+
+> Discussion Item - Automatic Trace Header Injection from Spring Cloud Sleuth Dependency (see build.gradle, or pom.xml)
+
+#### 2.3 - Metrics Setup
 
 ##### Ensure Metric Registrar CLI plugin is installed
 
@@ -75,11 +83,76 @@ cf register-metrics-endpoint APP-NAME /actuator/prometheus
 
 > Remember to replace APP-NAME with your application name.
 
-#### 2.2 - Alerting Setup
+
+
+### 3 - Demo
+
+
+PCF Metrics GUI is PCF AppsMan application view under the "View in PCF Metrics" button.
+
+Application functionality is available from the default application path ( i.e. the application index page ).
+
+> Note - On PWS (Pivotal Web Services) there is a Metrics ingestion delay of ~10 minutes.
+
+#### 3.1 - PCF Metrics Logging
+
+Demo Logging and Search in PCF Metrics, including filtering Application logs, searching and selecting time intervals.
+
+Create applications logs -- via provided web GUI (Cause JVM or JS Error). 
+
+Also demo CLI access to centralized logging.
+
+```sh
+cf logs APP_NAME
+```
+
+
+
+#### 3.2 - Tracing Demo
+
+Discuss the value of "Correlation IDs" , especially with regards to MicroService designs.
+
+Invoke a traced calling -- via provided web GUI (Simple Trace Call Button).
+
+Locate it in the PCF Metrics Log view, and view it in the Trace Explorer.
+
+<img src="img/viewtrace.png" width="750">
+
+PCF Metrics Trace ingestion may take up to a few minutes.
+
+Note that Logs will be aggregated across Applications as well (assuming shared TraceId).
+
+<img src="img/trace.png" width="750">
+
+#### 3.3 - Metrics Demo
+
+Demo Application Metrics including the built-in ones listed with the /actuator/metrics endpoint. As well as the custom ones used in the MetricsController.
+
+Demo creation of Chart in PCF Metrics using custom application data.
+
+You can demo :
+
+1) automatically added metrics from Micrometer
+2) auto generating application metrics - such as the *purchase* metric tracking random purchase amounts from the application.
+3) manually invoked metrics from the application GUI using the : Run Timed Method, Add to Distribution Summary buttons.
+
+Available Micrometer metrics are also available to view at the /actuator/metrics endpoint of your application.
+
+<img src="img/metricsbutton.png" width="750">
+
+<img src="img/metrics.png" width="750">
+
+> Discussion Item - Note Counter Metrics Types are currently NOT supported in PCF Metrics.
+
+
+
+### 4 - Alerting (Optional)
+
+#### 4.1 - Alerting Setup
 
 Create a Slack Incoming WebHook URL
 
-One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration. 
+One can be created by logging into your Slack account at www.slack.com, browsing the *App Directory* for *Incoming WebHooks* and adding your own configuration.
 
 (App Directory Link is available on home page footer of Slack under Resources).
 
@@ -111,73 +184,14 @@ You will need to re-stage for the changes to take effect:
 cf restage APP-NAME
 ```
 
-For local testing you will need to set your SLACK_INCOMING_WEB_HOOK environment variable accordingly. 
+For local testing you will need to set your SLACK_INCOMING_WEB_HOOK environment variable accordingly.
 
 ```sh
 export SLACK_INCOMING_WEB_HOOK=https://hooks.slack.com/services/SOME_CORRECT_VALUE
 
 ```
 
-#### 2.3 - Logging Setup
-
-No setup required, PCF automatically takes all STDIO / STERR output from applications.
-
-#### 2.4 - Tracing Setup
-
-No setup required, PCF automatically detected tracing information provided from Spring Cloud Sleuth dependency.
-
-
-### 3 - Demo
-
-PCF Metrics GUI is PCF AppsMan application view under the "View in PCF Metrics" button.
-
-Application functionality is available from the default application path ( i.e. the application index page ).
-
-#### 3.1 - PCF Metrics - Metrics 
-
-Demo Application Metrics including the built-in ones listed with the /actuator/metrics endpoint. As well as the custom ones used in the MetricsController.
-
-Demo creation of Chart in PCF Metrics using custom application data.
-
-<img src="img/metrics.png" width="750">
-
-#### 3.2 - PCF Metrics - Alerting (Beta)
-
-Create a PCF Metric Alert under the Monitor Tab -- use the build in crash event.
-
-Demo Slack PCF Metrics Alerting, by simulating a JVM crash (button).
-
-<img src="img/alert.png" width="750">
-
-PCF Metrics Event alerting lag may talk up to a few minutes.
-
-#### 3.3 - PCF Metrics - Trace Explorer
-
-Discuss the value of "Correlation IDs" , especially with regards to MicroService designs.
-
-Invoke a traced calling -- via provided web gui. 
-
-Locate it in the PCF Metrics Log view, and view it in the Trace Explorer.
-
-<img src="img/viewtrace.png" width="750">
-
-PCF Metrics Trace ingestion may take up to a few minutes.
-
-Note that Logs will be aggregated across Applications as well (assuming shared TraceId).
-
-<img src="img/trace.png" width="750">
-
-#### 3.4 - PCF Metrics Logging
-
-Demo Logging and Search in PCF Metrics.
-
-Also demo CLI access to centralized logging.
-
-```sh
-cf logs APP_NAME
-```
-
-#### 3.5 - Application Error Level Log Alerting
+#### 4.2 - Alerting Demo
 
 Note SLACK_INCOMING_WEB_HOOK environment variable needs to be set -- either in PCF or locally.
 
@@ -193,15 +207,9 @@ Demo Client-Side Alerting (JS), by causing a Client-Side Error / Exception (butt
 
 Note that we are persisting the UserAgent -- important in helping isolate "page-snap" issues.
 
-##### Application Information
 
-Demo the /actuator/info endpoint.  Note the inclusion of Git and Build information to easily identify deployed artifact.
 
-<img src="img/info.png" width="300">
-
-Note that custom /info and /health information can easily be added in a variety of ways.
-
-### 4 - Additional Demo Notes
+### 5 - Additional Demo Notes
 
 #### Exposed Actuator Endpoints
 
@@ -238,7 +246,7 @@ The org.springframework.cloud:spring-cloud-starter-sleuth dependency is required
 
 High cardinality label / tag values (i.e. unique guids, user data such as emails, etc) for metrics implementations are highly discouraged, and have the potential to overwhelm time-series databases such as Datadog or Promethues. 
 
-### 5 - 3rd-Party Metrics -- Humio Integration Instructions (Optional)
+### 6 - 3rd-Party Metrics -- Humio Integration Instructions (Optional)
 
 As an alternate target for Metrics, you can also use alternate Metrics Platform Solutions. One such / easy to setup solution is Humio.
 

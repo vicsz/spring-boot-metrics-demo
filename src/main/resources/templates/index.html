@@ -34,7 +34,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h2>Logging</h2></div>
                 <div class="panel-body">
-                    <p>Assuming correct Slack setup, Errors / Exceptions will cause a Slack Alerts.</p>
+                    <p>Log exceptions.</p>
                     <button type="button" class="btn btn-warning" onclick='$.get("logging/exception")' >Cause JVM (Server-Side) Runtime Exception</button>
                     <button type="button" class="btn btn-warning" onclick='throw "JS (Client-Side) Error"' >Cause JS (Client-Side) Error </button>
                     <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/logfile'" >Logfile Actuator</button>
@@ -54,36 +54,19 @@
                 <div class="panel-heading"><h2>Metrics</h2></div>
                 <div class="panel-body">
                     <p>Update and View Custom Application Metrics.</p>
+
                     <p>
-                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.gauge'" >View Sample Gauge</button>
+                        <button type="button" class="btn btn-primary" onclick='$.get("metrics/summary")' >Add to Sample Distribution Summary</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.distributionsummary'" >Sample Distribution Summary Metrics Actuator</button>
                     </p>
                     <p>
-                        <button type="button" class="btn btn-primary" onclick='$.get("metrics/count")' >Increment Sample Counter</button>
-                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.counter'" >View Sample Counter</button>
-                    </p>
-                    <p>
-                        <button type="button" class="btn btn-primary" onclick='$.get("metrics/timer")' >Run Timed Method</button>
-                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.timer'" >View Sample Timer</button>
-                    </p>
-                    <p>
-                        <button type="button" class="btn btn-primary" onclick='$.get("metrics/summary")' >Add to Distribution Summary</button>
-                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/sample.distributionsummary'" >View Sample Distribution Summary</button>
-                    </p>
-                    <p>
-                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/purchase'" >View Scheduled Purchase Example</button>
-                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/purchase?tag=product_name:house'" >View Scheduled Purchase - filter by Label / Tag example</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/purchase'" >Scheduled Purchase Metrics Actuator </button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics/purchase?tag=product_name:house'" >Scheduled Purchase Metrics Actuator - filter by Label / Tag example</button>
                         <button type="button" class="btn btn-info" onclick="window.location.href='/actuator/metrics'" >Metrics Actuator</button>
                     </p>
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading"><h2>PCF Application Events</h2></div>
-                <div class="panel-body">
-                    <p>After adding an Event Monitor in PCF Metrics for cf.system.events.crash, a Slack alert will show shortly after the simulated crash. </p>
-                    <button type="button" class="btn btn-danger" onclick='$.get("logging/crash")' >Simulate JVM Crash</button>
-                </div>
-            </div>
 
         </div>
         </div>
