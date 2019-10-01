@@ -1,6 +1,4 @@
 applications:
 - name: metrics-demo
   path: build/libs/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
-  buildpacks:
-    - https://github.com/cloudfoundry/java-buildpack
   random-route: true
