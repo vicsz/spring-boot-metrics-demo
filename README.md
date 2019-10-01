@@ -40,21 +40,13 @@ or build the application (via Maven)
 Deploy to PCF using the CLI (for gradle build)
 
 ```sh
-cf push APP-NAME
+cf push
 ```
 
 Deploy to PCF using the CLI (for maven build)
 
 ```sh
-cf push APP-NAME -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
-```
-
-> Where APP-NAME is your desired unique application name in PCF
-
-> If you get a *The app cannot be mapped to route metrics-demo.cfapps.io because the route exists in a different space.* error.  Run the push command with --random-route.
-
-```sh
-cf push --random-route metrics-demo
+cf push -p target/spring-boot-metrics-demo-1.0.0-SNAPSHOT.jar
 ```
 
 ### 2 - Setup
@@ -88,7 +80,7 @@ cf install-plugin -r CF-Community "metric-registrar"
 ##### Register your Metrics endpoint with PCF
 
 ```sh
-cf register-metrics-endpoint APP-NAME /actuator/prometheus
+cf register-metrics-endpoint metrics-demo /actuator/prometheus
 ``` 
 
 > Remember to replace APP-NAME with your application name.
@@ -113,7 +105,7 @@ Create applications logs -- via provided web GUI (Cause JVM or JS Error).
 Also demo CLI access to centralized logging.
 
 ```sh
-cf logs APP_NAME
+cf logs metrics-demo
 ```
 
 
@@ -185,13 +177,13 @@ To demo the Application Error Level Log Alerting with deployed PCF apps, make su
 To add this value using the CLI (update INSERT_YOUR_WEB_HOOK_URL_HERE accordingly)
 
 ```sh
-cf set-env APP-NAME SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
+cf set-env metrics-demo SLACK_INCOMING_WEB_HOOK INSERT_YOUR_WEB_HOOK_URL_HERE
 ```
 
 You will need to re-stage for the changes to take effect:
 
 ```sh
-cf restage APP-NAME
+cf restage metrics-demo
 ```
 
 For local testing you will need to set your SLACK_INCOMING_WEB_HOOK environment variable accordingly.
