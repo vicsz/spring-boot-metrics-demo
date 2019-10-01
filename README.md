@@ -1,4 +1,4 @@
-# Spring Boot with PCF Metrics Demo
+# Spring Boot Observability with PCF Metrics Demo
 
 Application demonstrating Logging, Tracing, and Metrics functionality with Spring Boot 2.X (with Micrometer) and functionality of the "PCF Metrics" Tile in Pivotal Cloud Foundry.
 
