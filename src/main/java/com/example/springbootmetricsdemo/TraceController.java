@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +21,7 @@ public class TraceController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("http://${vcap.application.application_uris[0]:localhost:8080}")
+    @Value("${vcap.application.application_uris[0]:localhost:8080}")
     private String application_url;
 
     @Autowired
@@ -27,27 +29,32 @@ public class TraceController {
 
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
+
         return builder.build();
     }
 
     @RequestMapping("/service-a")
-    public String serviceA(){
+    public String serviceA(HttpServletRequest request){
 
         logger.info("Calling Service A");
 
         randomDelay();
 
-        return webClient.get().uri(application_url + "/trace/service-b").retrieve().bodyToMono(String.class).block();
+        return webClient.get().uri(getFullUrl(request,"/trace/service-b")).retrieve().bodyToMono(String.class).block();
+    }
+
+    private String getFullUrl(HttpServletRequest request, String path){
+        return request.isSecure() ? "https" : "http" + "://"+ application_url + path;
     }
 
     @RequestMapping("/service-b")
-    public String serviceB(){
+    public String serviceB(HttpServletRequest request){
 
         logger.info("Calling Service B");
 
         randomDelay();
 
-        Mono<String> serviceCallMono = webClient.get().uri(application_url + "/trace/service-c").retrieve().bodyToMono(String.class);
+        Mono<String> serviceCallMono = webClient.get().uri(getFullUrl(request,"/trace/service-c")).retrieve().bodyToMono(String.class);
 
         //2 concurrent calls to Service C
         return Mono.zip(serviceCallMono, serviceCallMono, (a,b) -> a + b).block();
