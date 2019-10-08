@@ -44,6 +44,8 @@ public class TraceController {
     }
 
     private String getFullUrl(HttpServletRequest request, String path){
+
+        //Use Secure (https) protocol if inbound request is Secure to prevent redirects which WebClient won't do
         return (request.isSecure() ? "https" : "http") + "://"+ application_url + path;
     }
 
