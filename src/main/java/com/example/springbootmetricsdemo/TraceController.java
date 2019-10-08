@@ -44,7 +44,7 @@ public class TraceController {
     }
 
     private String getFullUrl(HttpServletRequest request, String path){
-        return request.isSecure() ? "https" : "http" + "://"+ application_url + path;
+        return (request.isSecure() ? "https" : "http") + "://"+ application_url + path;
     }
 
     @RequestMapping("/service-b")
