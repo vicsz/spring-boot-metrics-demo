@@ -1,5 +1,8 @@
 # Spring Boot Observability with PCF Metrics Demo
 
+![](https://github.com/vicsz/spring-boot-metrics-demo/workflows/Spring%20Boot%20Metrics%20Demo%20Build/badge.svg
+)
+
 Application demonstrating Logging, Tracing, and Metrics functionality with Spring Boot 2.X (with Micrometer) and functionality of the "PCF Metrics" Tile in Pivotal Cloud Foundry.
 
 Centralized logging / metrics / and logging functionality is provided out-the-box with the PCF platform with a default storage time of 2 weeks.
