@@ -243,6 +243,10 @@ The org.springframework.cloud:spring-cloud-starter-sleuth dependency is required
 
 High cardinality label / tag values (i.e. unique guids, user data such as emails, etc) for metrics implementations are highly discouraged, and have the potential to overwhelm time-series databases such as Datadog or Promethues. 
 
+#### Common Tags
+
+Common tags can be defined at the registry level and are added to every metric reported to the monitoring system. This is generally used for dimensional drill-down on the operating environment like host, instance, region, stack, etc.
+
 ### 6 - 3rd-Party Metrics -- Humio Integration Instructions (Optional)
 
 As an alternate target for Metrics, you can also use alternate Metrics Platform Solutions. One such / easy to setup solution is Humio.

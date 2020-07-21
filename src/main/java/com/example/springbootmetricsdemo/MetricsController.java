@@ -1,14 +1,19 @@
 package com.example.springbootmetricsdemo;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +38,21 @@ public class MetricsController {
 
         //Example event - { "name": "sample_gauge", "value": 313759208 }
 
+    }
+
+    //Add Common Tags to all Meters -- i.e. things like region, ip address, env, etc
+    @Bean
+    public MeterRegistryCustomizer<MeterRegistry> metricsCommonTags() throws UnknownHostException{
+
+        InetAddress inetAddress = InetAddress.getLocalHost();
+
+        return registry -> {
+            registry
+                    .config()
+                    .commonTags("ip", inetAddress.getHostAddress())
+                    .commonTags("hostname", inetAddress.getHostName());
+
+        };
     }
 
     @RequestMapping("/count")
