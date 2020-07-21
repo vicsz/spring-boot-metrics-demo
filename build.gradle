@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.example'
-version = "1.0.${System.env.BUILD_NUMBER ?: '0-SNAPSHOT'}" //Use Jenkins BUILD_NUMBER env if available
+version = "1.0.${System.env.BUILD_NUMBER ?: System.env.GITHUB_RUN_NUMBER ?: '0-SNAPSHOT'}" //Use Jenkins BUILD_NUMBER env or GitHub Actions RUN_NUMBER if available
 sourceCompatibility = 1.8
 
 repositories {
